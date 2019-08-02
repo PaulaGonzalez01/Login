@@ -5,6 +5,14 @@
  */
 package integradoe;
 
+import clases.User;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import vistas.Login;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import vistas.IngresoNotas;
 
 /**
  *
@@ -19,25 +28,17 @@ import javafx.stage.Stage;
  */
 public class Integradoe extends Application {
     
+    public static ArrayList<User> profesores = new ArrayList<>();
+    
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
+//        profesores.add(new User("Jaime28","2020"));
+//        profesores.add(new User("Patricia43","4040"));
+//        profesores.add(new User("Miranda20","5050"));
+//        profesores.add(new User("Paula30","6060"));
+//        serializar("users.ser");
+        primaryStage.setTitle("Sistema de ingreso de notas");
+        primaryStage.setScene(new Login(primaryStage).getLogScene());
         primaryStage.show();
     }
 
@@ -46,6 +47,14 @@ public class Integradoe extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public void serializar(String file){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))){
+            oos.writeObject(profesores);
+        } catch (IOException ex) {
+            Logger.getLogger(IngresoNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

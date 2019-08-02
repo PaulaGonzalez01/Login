@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package integradoe;
+package clases;
 
 /**
  *
- * @author FIMCP
+ * @author user
  */
-public class Login {
-    
+public class NotValidGrade extends Exception {
+    public NotValidGrade(String message){
+        super(message);
+    }
 }
