@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -49,15 +50,21 @@ public class Login {
     
     private void iniciarComponentes(){
         titulo = new Label("LOGIN PROFESORES");
+        titulo.setId("title");
         user = new Label("Nombre de usuario: ");
         pass = new Label("Contraseña: ");
         t1 = new TextField();
         t2 = new PasswordField();
         enter = new Button("Ingresar");
         container1 = new HBox(user, t1);
+        container1.setSpacing(10);
         container2 = new HBox(pass, t2);
+        container2.setSpacing(63.3333333333333333);
         root = new VBox(titulo, container1, container2, enter);
-        logScene = new Scene(root, 300, 300);
+        root.setPadding(new Insets(50));
+        root.setSpacing(20);
+        root.setId("rootLogin");
+        logScene = new Scene(root, 500, 300);
     }
     
     private void setEstilo(){
