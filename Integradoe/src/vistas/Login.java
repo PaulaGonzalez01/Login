@@ -50,24 +50,23 @@ public class Login {
     
     private void iniciarComponentes(){
         titulo = new Label("LOGIN PROFESORES");
-        titulo.setId("title");
         user = new Label("Nombre de usuario: ");
         pass = new Label("Contraseña: ");
         t1 = new TextField();
         t2 = new PasswordField();
         enter = new Button("Ingresar");
         container1 = new HBox(user, t1);
-        container1.setSpacing(10);
         container2 = new HBox(pass, t2);
-        container2.setSpacing(63.3333333333333333);
         root = new VBox(titulo, container1, container2, enter);
-        root.setPadding(new Insets(50));
-        root.setSpacing(20);
-        root.setId("rootLogin");
         logScene = new Scene(root, 500, 300);
     }
     
     private void setEstilo(){
+        root.setPadding(new Insets(50));
+        root.setSpacing(20);
+        root.setId("rootLogin");
+        titulo.setId("title");
+        container2.setSpacing(63.3333333333333333);
         root.setAlignment(Pos.CENTER);
         container1.setAlignment(Pos.BOTTOM_LEFT);
         container2.setAlignment(Pos.BOTTOM_LEFT);
@@ -90,7 +89,7 @@ public class Login {
             System.out.println(u);
             if(u.equals(teacher)){
                 isUser = true;
-                ventana.setScene(new IngresoNotas().getNotasScene());
+                ventana.setScene(new MenuUser(ventana).getMenuScene());
             }
         }
         System.out.println(isUser);
