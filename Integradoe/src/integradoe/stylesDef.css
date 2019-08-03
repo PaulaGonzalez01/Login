@@ -35,7 +35,7 @@ and open the template in the editor.
 #rootMenu {
     -fx-background-image: url("/images/rays.jpg");
     -fx-background-repeat: stretch;   
-    -fx-background-size: 300 300;
+    -fx-background-size: 400 400;
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }

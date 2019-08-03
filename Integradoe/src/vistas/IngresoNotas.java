@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  *
@@ -39,13 +40,17 @@ public class IngresoNotas {
     private TextField tnota2;
     private TextField tnota3;
     private Button registrar;
+    private Button regresar;
     private VBox box1;
     private VBox box2;
     private HBox centerBox;
+    private HBox buttonBox;
     private VBox root;
     private Scene notasScene;
+    private Stage ventana;
     
-    public IngresoNotas(){
+    public IngresoNotas(Stage s){
+        ventana = s;
         iniciarComponentes();
         giveActions();        
     }
@@ -61,10 +66,12 @@ public class IngresoNotas {
         tnota2 = new TextField();
         tnota3 = new TextField();
         registrar = new Button("Registrar");
+        regresar = new Button("Regresar");
         box1 = new VBox(estudiante, testudiante, nota2, tnota2);
         box2 = new VBox(nota1, tnota1, nota3, tnota3);
         centerBox = new HBox(box1, box2);
-        root = new VBox(titulo, centerBox, registrar);
+        buttonBox = new HBox(registrar, regresar);
+        root = new VBox(titulo, centerBox, buttonBox);
         notasScene = new Scene(root, 500, 500);
     }
 
@@ -105,6 +112,14 @@ public class IngresoNotas {
     
     private void giveActions(){
         registrar.setOnAction(e-> ingresarNotas());
+        regresar.setOnAction(e->regresar());
+        //Prueba git
+        //linea2
+        
+    }
+    
+    private void regresar(){
+        ventana.setScene(new MenuUser(ventana).getMenuScene());
     }
     
     private void validarNotas(double nota1, double nota2, double nota3) throws NotValidGrade{

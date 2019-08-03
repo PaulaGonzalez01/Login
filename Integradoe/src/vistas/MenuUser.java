@@ -5,6 +5,9 @@
  */
 package vistas;
 
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -27,6 +30,7 @@ public class MenuUser {
         ventana = s;
         iniciarComponentes();
         giveStyles();
+        giveActions();
     }
     
     private void iniciarComponentes(){
@@ -34,7 +38,7 @@ public class MenuUser {
         mostrar = new Button("Mostrar estudiantes");
         salir = new Button("Salir");
         root = new VBox(registro, mostrar, salir);
-        menuScene = new Scene(root, 300, 300);
+        menuScene = new Scene(root, 400, 400);
         menuScene.getStylesheets().add("/integradoe/stylesDef.css");
     }
     
@@ -44,7 +48,9 @@ public class MenuUser {
         mostrar.setId("shiny-orange");
         salir.setId("shiny-orange");
         root.setSpacing(40);
-        root.setId("rootLogin");
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(20));
+        root.setId("rootMenu");
         
     }
 
@@ -52,5 +58,22 @@ public class MenuUser {
         return menuScene;
     }
     
+    private void registrar(){
+        ventana.setScene(new IngresoNotas(ventana).getNotasScene());
+    }
+    
+    private void mostrar(){
+        
+    }
+    
+    private void salir(){
+       ventana.close();
+    }
+    
+    private void giveActions(){
+        registro.setOnAction(e->registrar());
+        mostrar.setOnAction(e->mostrar());
+        salir.setOnAction(e->salir());
+    }
     
 }
