@@ -7,6 +7,7 @@ package vistas;
 
 import clases.Estudiante;
 import clases.NotValidGrade;
+import clases.Preparable;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
  *
  * @author user
  */
-public class IngresoNotas {
+public class IngresoNotas implements Preparable{
     
     public static ArrayList<Estudiante> estudiantes = new ArrayList<>();
     
@@ -51,28 +52,9 @@ public class IngresoNotas {
     
     public IngresoNotas(Stage s){
         ventana = s;
-        iniciarComponentes();
-        giveActions();        
-    }
-    
-    private void iniciarComponentes(){
-        titulo = new Label("INGRESO DE NOTAS");
-        estudiante = new Label("Nombre del estudiante");
-        nota1 = new Label("Nota primer parcial");
-        nota2 = new Label("Nota segundo parcial");
-        nota3 = new Label("Nota mejoramiento");
-        testudiante = new TextField();
-        tnota1 = new TextField();
-        tnota2 = new TextField();
-        tnota3 = new TextField();
-        registrar = new Button("Registrar");
-        regresar = new Button("Regresar");
-        box1 = new VBox(estudiante, testudiante, nota2, tnota2);
-        box2 = new VBox(nota1, tnota1, nota3, tnota3);
-        centerBox = new HBox(box1, box2);
-        buttonBox = new HBox(registrar, regresar);
-        root = new VBox(titulo, centerBox, buttonBox);
-        notasScene = new Scene(root, 500, 500);
+        initializeComponents();
+        giveActions();  
+        giveStyle();
     }
 
     public Scene getNotasScene() {
@@ -110,7 +92,8 @@ public class IngresoNotas {
         alert.showAndWait();
     }
     
-    private void giveActions(){
+    @Override
+    public void giveActions(){
         registrar.setOnAction(e-> ingresarNotas());
         regresar.setOnAction(e->regresar());
         //Prueba git
@@ -126,5 +109,31 @@ public class IngresoNotas {
         if(nota1>100 || nota1<0 || nota2>100 || nota2<0 || nota3>100 || nota3<0){
             throw new NotValidGrade("La nota no es válida. Sólo puede ingresar notas desde 0 a 100");
         }
+    }
+
+    @Override
+    public void initializeComponents() {
+        titulo = new Label("INGRESO DE NOTAS");
+        estudiante = new Label("Nombre del estudiante");
+        nota1 = new Label("Nota primer parcial");
+        nota2 = new Label("Nota segundo parcial");
+        nota3 = new Label("Nota mejoramiento");
+        testudiante = new TextField();
+        tnota1 = new TextField();
+        tnota2 = new TextField();
+        tnota3 = new TextField();
+        registrar = new Button("Registrar");
+        regresar = new Button("Regresar");
+        box1 = new VBox(estudiante, testudiante, nota2, tnota2);
+        box2 = new VBox(nota1, tnota1, nota3, tnota3);
+        centerBox = new HBox(box1, box2);
+        buttonBox = new HBox(registrar, regresar);
+        root = new VBox(titulo, centerBox, buttonBox);
+        notasScene = new Scene(root, 500, 500);
+    }
+
+    @Override
+    public void giveStyle() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

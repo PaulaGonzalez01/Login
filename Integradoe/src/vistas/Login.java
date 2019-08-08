@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import clases.Preparable;
 import clases.User;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
  *
  * @author FIMCP
  */
-public class Login {
+public class Login implements Preparable{
     
     private Label titulo;
     private Label user;
@@ -43,37 +44,12 @@ public class Login {
     
     public Login(Stage s){
         ventana = s;
-        iniciarComponentes();
-        setEstilo();
+        initializeComponents();
+        giveStyle();
         giveActions();
     }
     
-    private void iniciarComponentes(){
-        titulo = new Label("LOGIN PROFESORES");
-        user = new Label("Nombre de usuario: ");
-        pass = new Label("Contraseña: ");
-        t1 = new TextField();
-        t2 = new PasswordField();
-        enter = new Button("Ingresar");
-        container1 = new HBox(user, t1);
-        container2 = new HBox(pass, t2);
-        root = new VBox(titulo, container1, container2, enter);
-        logScene = new Scene(root, 500, 300);
-    }
-    
-    private void setEstilo(){
-        root.setPadding(new Insets(50));
-        root.setSpacing(20);
-        root.setId("rootLogin");
-        titulo.setId("title");
-        container2.setSpacing(63.3333333333333333);
-        root.setAlignment(Pos.CENTER);
-        container1.setAlignment(Pos.BOTTOM_LEFT);
-        container2.setAlignment(Pos.BOTTOM_LEFT);
-        enter.setId("dark-blue");
-        logScene.getStylesheets().add("/integradoe/stylesDef.css");
-    }
-
+ 
     public Scene getLogScene() {
         return logScene;
     }
@@ -109,8 +85,37 @@ public class Login {
     }
     
     
-    private void giveActions(){
+    @Override
+    public void giveActions(){
         enter.setOnAction(e->ingresar());
+    }
+
+    @Override
+    public void initializeComponents() {
+        titulo = new Label("LOGIN PROFESORES");
+        user = new Label("Nombre de usuario: ");
+        pass = new Label("Contraseña: ");
+        t1 = new TextField();
+        t2 = new PasswordField();
+        enter = new Button("Ingresar");
+        container1 = new HBox(user, t1);
+        container2 = new HBox(pass, t2);
+        root = new VBox(titulo, container1, container2, enter);
+        logScene = new Scene(root, 500, 300);
+    }
+
+    @Override
+    public void giveStyle() {
+        root.setPadding(new Insets(50));
+        root.setSpacing(20);
+        root.setId("rootLogin");
+        titulo.setId("title");
+        container2.setSpacing(63.3333333333333333);
+        root.setAlignment(Pos.CENTER);
+        container1.setAlignment(Pos.BOTTOM_LEFT);
+        container2.setAlignment(Pos.BOTTOM_LEFT);
+        enter.setId("dark-blue");
+        logScene.getStylesheets().add("/integradoe/stylesDef.css");
     }
     
 }

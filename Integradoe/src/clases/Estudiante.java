@@ -69,17 +69,17 @@ public class Estudiante implements Serializable {
 
     @Override
     public String toString() {
-        return "Estudiante{" + "nombre=" + nombre + ", nota1=" + nota1 + ", nota2=" + nota2 + ", nota3=" + nota3 + ", promedio=" + promedio + '}';
+        return nombre;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + Objects.hashCode(this.nombre);
-        hash = 71 * hash + (int) (Double.doubleToLongBits(this.nota1) ^ (Double.doubleToLongBits(this.nota1) >>> 32));
-        hash = 71 * hash + (int) (Double.doubleToLongBits(this.nota2) ^ (Double.doubleToLongBits(this.nota2) >>> 32));
-        hash = 71 * hash + (int) (Double.doubleToLongBits(this.nota3) ^ (Double.doubleToLongBits(this.nota3) >>> 32));
-        hash = 71 * hash + (int) (Double.doubleToLongBits(this.promedio) ^ (Double.doubleToLongBits(this.promedio) >>> 32));
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.nombre);
+        hash = 41 * hash + (int) (Double.doubleToLongBits(this.nota1) ^ (Double.doubleToLongBits(this.nota1) >>> 32));
+        hash = 41 * hash + (int) (Double.doubleToLongBits(this.nota2) ^ (Double.doubleToLongBits(this.nota2) >>> 32));
+        hash = 41 * hash + (int) (Double.doubleToLongBits(this.nota3) ^ (Double.doubleToLongBits(this.nota3) >>> 32));
+        hash = 41 * hash + (int) (Double.doubleToLongBits(this.promedio) ^ (Double.doubleToLongBits(this.promedio) >>> 32));
         return hash;
     }
 
@@ -109,6 +109,8 @@ public class Estudiante implements Serializable {
         }
         return true;
     }
+
+   
     
     
     
