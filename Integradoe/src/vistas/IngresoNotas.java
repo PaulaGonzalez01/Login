@@ -96,9 +96,6 @@ public class IngresoNotas implements Preparable{
     public void giveActions(){
         registrar.setOnAction(e-> ingresarNotas());
         regresar.setOnAction(e->regresar());
-        //Prueba git
-        //linea2
-        
     }
     
     private void regresar(){
