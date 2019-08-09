@@ -45,7 +45,7 @@ public final class MenuUser implements Preparable {
     }
     
     private void mostrar(){
-        
+        ventana.setScene(new MostrarEstudiante(ventana).getmScene());
     }
     
     private void salir(){

@@ -7,6 +7,13 @@ package vistas;
 
 import clases.Estudiante;
 import clases.Preparable;
+import clases.User;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -17,7 +24,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import threads.Cronometro;
 
 /**
  *
@@ -31,24 +40,27 @@ public final class MostrarEstudiante implements Preparable {
     private ComboBox<Estudiante> cFilter;
     private Label title;
     private Label text;
+    private Label time;
     private Label message;
     private Button regresar;
+    private VBox leftPanel;
     private BorderPane root;
     private Scene mScene;
     private final Stage stage;
 
-    public MostrarEstudiante(Stage s){
+    public MostrarEstudiante(Stage s) {
         stage = s;
+        IngresoNotas.estudiantes = IngresoNotas.deserializar("estudiantes.ser");
         initializeComponents();
         giveActions();
         giveStyle();
         configTable();
+        correrCronometro();
     }
 
     public Scene getmScene() {
         return mScene;
     }
-    
 
     @Override
     public void initializeComponents() {
@@ -57,19 +69,28 @@ public final class MostrarEstudiante implements Preparable {
         cFilter = new ComboBox<>(usersList);
         title = new Label("Listado de estudiantes");
         text = new Label("Seleccione el filtro de búsqueda:");
+        time = new Label();
         message = new Label();
         regresar = new Button("Regresar");
-        root = new BorderPane(table, title, root, root, root);
+        leftPanel = new VBox(time, text, cFilter, message);
+        root = new BorderPane();
+        root.setTop(title);
+        root.setCenter(table);
+        root.setBottom(regresar);
+        root.setRight(leftPanel);
+        mScene = new Scene(root, 500, 500);
     }
 
     @Override
     public void giveStyle() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void giveActions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        regresar.setOnAction(e-> {
+            regresar();
+        });
     }
 
     private void configTable() {
@@ -77,23 +98,30 @@ public final class MostrarEstudiante implements Preparable {
         TableColumn<Double, Estudiante> nota1Col = new TableColumn<>("Primer parcial");
         TableColumn<Double, Estudiante> nota2Col = new TableColumn<>("Segundo parcial");
         TableColumn<Double, Estudiante> nota3Col = new TableColumn<>("Mejoramiento");
-        
+
         nameCol.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         nota1Col.setCellValueFactory(new PropertyValueFactory<>("nota1"));
         nota2Col.setCellValueFactory(new PropertyValueFactory<>("nota2"));
         nota3Col.setCellValueFactory(new PropertyValueFactory<>("nota3"));
-        
+
         table.getColumns().add(nameCol);
         table.getColumns().add(nota1Col);
         table.getColumns().add(nota2Col);
         table.getColumns().add(nota3Col);
-        
-        
-        
-//        table.getItems().add();
-//        table.getItems().add();
-        
-               
+
+        for (Estudiante e : IngresoNotas.estudiantes) {
+            table.getItems().add(e);
+        }
 
     }
+    
+    private void regresar(){
+        stage.setScene(new MenuUser(stage).getMenuScene());
+    }
+    
+    private void correrCronometro(){
+        Thread timer = new Thread(new Cronometro(time, 30), "Cronometro1");
+        timer.start();
+    }
+
 }

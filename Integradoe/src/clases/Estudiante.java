@@ -92,22 +92,7 @@ public class Estudiante implements Serializable {
             return false;
         }
         final Estudiante other = (Estudiante) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.nota1) != Double.doubleToLongBits(other.nota1)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.nota2) != Double.doubleToLongBits(other.nota2)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.nota3) != Double.doubleToLongBits(other.nota3)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.promedio) != Double.doubleToLongBits(other.promedio)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.nombre, other.nombre);
     }
 
    

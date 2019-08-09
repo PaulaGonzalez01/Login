@@ -8,8 +8,10 @@ package vistas;
 import clases.Estudiante;
 import clases.NotValidGrade;
 import clases.Preparable;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -27,10 +29,10 @@ import javafx.stage.Stage;
  *
  * @author user
  */
-public class IngresoNotas implements Preparable{
-    
+public final class IngresoNotas implements Preparable {
+
     public static ArrayList<Estudiante> estudiantes = new ArrayList<>();
-    
+
     private Label titulo;
     private Label estudiante;
     private Label nota1;
@@ -48,20 +50,22 @@ public class IngresoNotas implements Preparable{
     private HBox buttonBox;
     private VBox root;
     private Scene notasScene;
-    private Stage ventana;
-    
-    public IngresoNotas(Stage s){
+    private final Stage ventana;
+
+    public IngresoNotas(Stage s) {
         ventana = s;
         initializeComponents();
-        giveActions();  
+        giveActions();
         giveStyle();
+        estudiantes = deserializar("estudiantes.ser");
+        
     }
 
     public Scene getNotasScene() {
         return notasScene;
     }
-    
-    private void ingresarNotas(){
+
+    private void ingresarNotas() {
         try {
             String nombre = testudiante.getText();
             double nota11 = Double.parseDouble(tnota1.getText());
@@ -69,41 +73,46 @@ public class IngresoNotas implements Preparable{
             double nota33 = Double.parseDouble(tnota3.getText());
             validarNotas(nota11, nota22, nota33);
             Estudiante estudiante1 = new Estudiante(nombre, nota11, nota22, nota33);
-            estudiantes.add(estudiante1);
-            serializar("estudiantes.ser");        
-            mostrarAlerta("Datos del estudiante registrado con éxito","Saving Estudiante");
+            if (estudiantes.contains(estudiante1)) {
+                System.out.println("El estudiante ya ha sido agregado al sistema");
+            } else {
+                estudiantes.add(estudiante1);
+                serializar("estudiantes.ser");
+            }
+
+            mostrarAlerta("Datos del estudiante registrado con éxito", "Saving Estudiante");
         } catch (NotValidGrade ex) {
             Logger.getLogger(IngresoNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
-    private void serializar(String file){
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))){
+
+    private void serializar(String file) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(estudiantes);
         } catch (IOException ex) {
             Logger.getLogger(IngresoNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public static void mostrarAlerta(String context, String title){
+
+    public static void mostrarAlerta(String context, String title) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(context);
         alert.setTitle(title);
         alert.showAndWait();
     }
-    
+
     @Override
-    public void giveActions(){
-        registrar.setOnAction(e-> ingresarNotas());
-        regresar.setOnAction(e->regresar());
+    public void giveActions() {
+        registrar.setOnAction(e -> ingresarNotas());
+        regresar.setOnAction(e -> regresar());
     }
-    
-    private void regresar(){
+
+    private void regresar() {
         ventana.setScene(new MenuUser(ventana).getMenuScene());
     }
-    
-    private void validarNotas(double nota1, double nota2, double nota3) throws NotValidGrade{
-        if(nota1>100 || nota1<0 || nota2>100 || nota2<0 || nota3>100 || nota3<0){
+
+    private void validarNotas(double nota1, double nota2, double nota3) throws NotValidGrade {
+        if (nota1 > 100 || nota1 < 0 || nota2 > 100 || nota2 < 0 || nota3 > 100 || nota3 < 0) {
             throw new NotValidGrade("La nota no es válida. Sólo puede ingresar notas desde 0 a 100");
         }
     }
@@ -132,5 +141,17 @@ public class IngresoNotas implements Preparable{
     @Override
     public void giveStyle() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static ArrayList<Estudiante> deserializar(String filename){
+        ArrayList<Estudiante> allusers = new ArrayList<>();
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))){
+            
+            allusers = (ArrayList<Estudiante>) ois.readObject();
+            
+        }catch (ClassNotFoundException | IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allusers;
     }
 }
